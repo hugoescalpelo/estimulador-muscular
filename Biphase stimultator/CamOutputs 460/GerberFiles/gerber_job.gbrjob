@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2024-04-15T16:25:55Z",
+        "GenerationSoftware": {
+            "Application": "Fusion Electronics",
+            "Vendor": "Autodesk",
+            "Version": "9.7.0"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "Biphasic460 v3"
+        },
+        "Owner": "Hugo Escalpelo <hugoescalpelo@gmail.com>",
+        "Size": {
+            "X": 86.34,
+            "Y": 78.41
+        }
+    }
+}
