@@ -10,9 +10,9 @@ int led = 1;
 int buttonPin = 22; // Pin donde está conectado el botón
 bool buttonPressed = false; // Estado del botón
 
-const int T_HIGH = 60;
-const int T_LOW = 60;
-const int SAFE_TIME = 30;
+const int T_HIGH = 10;
+const int T_LOW = 10;
+const int SAFE_TIME = 10;
 
 int selecta = 0;
 
@@ -47,7 +47,7 @@ void loop() {
     if (buttonState == LOW && !buttonPressed) {
         buttonPressed = true;
         digitalWrite(led, HIGH); // Encender el LED
-        blnk(1); // Ejecutar la secuencia basada en selecta
+        blnk(selecta); // Ejecutar la secuencia basada en selecta
         delay(200);
     } else if (buttonState == HIGH && buttonPressed) {
         buttonPressed = false;
@@ -58,66 +58,50 @@ void loop() {
 void blnk(int sel) {
     switch (sel) {
         case 1:
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 3; i++) {
                 digitalWrite(stimulator1a, LOW);
                 digitalWrite(stimulator1b, LOW);
-                digitalWrite(stimulator2a, LOW);
-                digitalWrite(stimulator2b, LOW);
-                digitalWrite(stimulator3a, LOW);
-                digitalWrite(stimulator3b, LOW);
                 delay(SAFE_TIME);
                 digitalWrite(stimulator1a, HIGH);
                 digitalWrite(stimulator1b, LOW);
-                digitalWrite(stimulator2a, HIGH);
-                digitalWrite(stimulator2b, LOW);
-                digitalWrite(stimulator3a, HIGH);
-                digitalWrite(stimulator3b, LOW);
                 delay(T_HIGH);
                 digitalWrite(stimulator1a, LOW);
                 digitalWrite(stimulator1b, LOW);
-                digitalWrite(stimulator2a, LOW);
-                digitalWrite(stimulator2b, LOW);
-                digitalWrite(stimulator3a, LOW);
-                digitalWrite(stimulator3b, LOW);
                 delay(SAFE_TIME);
                 digitalWrite(stimulator1a, LOW);
                 digitalWrite(stimulator1b, HIGH);
-                digitalWrite(stimulator2a, LOW);
-                digitalWrite(stimulator2b, HIGH);
-                digitalWrite(stimulator3a, LOW);
-                digitalWrite(stimulator3b, HIGH);
                 delay(T_LOW);
             }
             break;
         case 2:
             for (int i = 0; i < 3; i++) {
-                digitalWrite(stimulator2a, LOW);
-                digitalWrite(stimulator2b, LOW);
+                digitalWrite(stimulator1a, LOW);
+                digitalWrite(stimulator1b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator2a, HIGH);
-                digitalWrite(stimulator2b, LOW);
+                digitalWrite(stimulator1a, HIGH);
+                digitalWrite(stimulator1b, LOW);
                 delay(T_HIGH);
-                digitalWrite(stimulator2a, LOW);
-                digitalWrite(stimulator2b, LOW);
+                digitalWrite(stimulator1a, LOW);
+                digitalWrite(stimulator1b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator2a, LOW);
-                digitalWrite(stimulator2b, HIGH);
+                digitalWrite(stimulator1a, LOW);
+                digitalWrite(stimulator1b, HIGH);
                 delay(T_LOW);
             }
             break;
         case 3:
             for (int i = 0; i < 3; i++) {
-                digitalWrite(stimulator3a, LOW);
-                digitalWrite(stimulator3b, LOW);
+                digitalWrite(stimulator1a, LOW);
+                digitalWrite(stimulator1b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator3a, HIGH);
-                digitalWrite(stimulator3b, LOW);
+                digitalWrite(stimulator1a, HIGH);
+                digitalWrite(stimulator1b, LOW);
                 delay(T_HIGH);
-                digitalWrite(stimulator3a, LOW);
-                digitalWrite(stimulator3b, LOW);
+                digitalWrite(stimulator1a, LOW);
+                digitalWrite(stimulator1b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator3a, LOW);
-                digitalWrite(stimulator3b, HIGH);
+                digitalWrite(stimulator1a, LOW);
+                digitalWrite(stimulator1b, HIGH);
                 delay(T_LOW);
             }
             break;
@@ -133,13 +117,13 @@ void blnk(int sel) {
             break;
         case 5:
             for (int i = 0; i < 9; i++) {
-                digitalWrite(stimulator2a, HIGH);
+                digitalWrite(stimulator1a, HIGH);
                 delay(T_HIGH);
-                digitalWrite(stimulator2a, LOW);
+                digitalWrite(stimulator1a, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator2b, HIGH);
+                digitalWrite(stimulator1b, HIGH);
                 delay(T_LOW);
-                digitalWrite(stimulator2b, LOW);
+                digitalWrite(stimulator1b, LOW);
                 delay(SAFE_TIME);
             }
             break;
