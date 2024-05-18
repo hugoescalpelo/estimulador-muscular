@@ -18,12 +18,12 @@
 #include <OSCBundle.h>
 #include <OSCData.h>
 
-char ssid[] = "HUAWEI_311_FA98";          // your network SSID (name)
-char pass[] = "RAADH00RLAM";                    // your network password
+char ssid[] = "wifiCelestial";          // your network SSID (name)
+char pass[] = "00000000";                    // your network password
 
 // A UDP instance to let us send and receive packets over UDP
 WiFiUDP Udp;
-const IPAddress outIp(192,168,8,101);        // remote IP (not needed for receive)
+const IPAddress outIp(192,168,183,119);        // remote IP (not needed for receive)
 const unsigned int outPort = 57120;          // remote port (not needed for receive)
 const unsigned int localPort = 8888;        // local port to listen for UDP packets (here's where we send the packets)
 
@@ -31,22 +31,16 @@ const unsigned int localPort = 8888;        // local port to listen for UDP pack
 OSCErrorCode error;
 unsigned int ledState = LOW;              // LOW means led is *on*
 
-#ifndef BUILTIN_LED
-#ifdef LED_BUILTIN
-#define BUILTIN_LED LED_BUILTIN
-#else
-#define BUILTIN_LED 12
-#endif
-#endif
+#define LED 12
 
-int stimulator1a = 15;
-int stimulator1b = 2;
-int stimulator2a = 4;
-int stimulator2b = 16;
-int stimulator3a = 17;
-int stimulator3b = 5;
-int stimulator4a = 18;
-int stimulator4b = 19;
+int stimulator1a = 4;
+int stimulator1b = 16;
+int stimulator2a = 17;
+int stimulator2b = 5;
+int stimulator3a = 18;
+int stimulator3b = 19;
+int stimulator4a = 21;
+int stimulator4b = 22;
 int buttonPin = 13; // Pin donde está conectado el botón
 const int T_HIGH = 40;
 const int T_LOW = 40;
@@ -62,7 +56,7 @@ void setup() {
   pinMode(stimulator3b, OUTPUT);
   pinMode(stimulator4a, OUTPUT);
   pinMode(stimulator4b, OUTPUT);
-  //pinMode(led, OUTPUT);
+  pinMode(LED, OUTPUT);
   pinMode(buttonPin, INPUT_PULLUP); // Configurar el pin del botón como entrada con resistencia interna de pull-up
     
   digitalWrite(stimulator1a, LOW);
@@ -73,10 +67,10 @@ void setup() {
   digitalWrite(stimulator3b, LOW);
   digitalWrite(stimulator4a, LOW);
   digitalWrite(stimulator4b, LOW);
-  //digitalWrite(led, LOW);
+  digitalWrite(LED, LOW);
 
-  pinMode(BUILTIN_LED, OUTPUT);
-  digitalWrite(BUILTIN_LED, ledState);    // turn *on* led
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, ledState);    // turn *on* led
 
   Serial.begin(115200);
 
@@ -125,7 +119,9 @@ void loop() {
       msg.fill(Udp.read());
     }
     if (!msg.hasError()) {
+      digitalWrite(LED, HIGH);
       msg.dispatch("/msg", blnk);
+      digitalWrite(LED, LOW);
     } else {
       error = msg.getError();
       Serial.print("error: ");
@@ -136,9 +132,11 @@ void loop() {
 
 void blnk(OSCMessage &msg) {
   int sel = msg.getInt(0);
+  Serial.print("Received OSC message: ");
+  Serial.println(sel);  
     switch (sel) {
         case 1:
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 8; i++) {
                 digitalWrite(stimulator1a, LOW);
                 digitalWrite(stimulator1b, LOW);
                 delay(SAFE_TIME);
@@ -154,50 +152,50 @@ void blnk(OSCMessage &msg) {
             }
             break;
         case 2:
-            for (int i = 0; i < 5; i++) {
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, LOW);
+            for (int i = 0; i < 8; i++) {
+                digitalWrite(stimulator2a, LOW);
+                digitalWrite(stimulator2b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator1a, HIGH);
-                digitalWrite(stimulator1b, LOW);
+                digitalWrite(stimulator2a, HIGH);
+                digitalWrite(stimulator2b, LOW);
                 delay(T_HIGH);
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, LOW);
+                digitalWrite(stimulator2a, LOW);
+                digitalWrite(stimulator2b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, HIGH);
+                digitalWrite(stimulator2a, LOW);
+                digitalWrite(stimulator2b, HIGH);
                 delay(T_LOW);
             }
             break;
         case 3:
-            for (int i = 0; i < 5; i++) {
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, LOW);
+            for (int i = 0; i < 8; i++) {
+                digitalWrite(stimulator3a, LOW);
+                digitalWrite(stimulator3b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator1a, HIGH);
-                digitalWrite(stimulator1b, LOW);
+                digitalWrite(stimulator3a, HIGH);
+                digitalWrite(stimulator3b, LOW);
                 delay(T_HIGH);
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, LOW);
+                digitalWrite(stimulator3a, LOW);
+                digitalWrite(stimulator3b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, HIGH);
+                digitalWrite(stimulator3a, LOW);
+                digitalWrite(stimulator3b, HIGH);
                 delay(T_LOW);
             }
             break;
         case 4:
-            for (int i = 0; i < 5; i++) {
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, LOW);
+            for (int i = 0; i < 8; i++) {
+                digitalWrite(stimulator4a, LOW);
+                digitalWrite(stimulator4b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator1a, HIGH);
-                digitalWrite(stimulator1b, LOW);
+                digitalWrite(stimulator4a, HIGH);
+                digitalWrite(stimulator4b, LOW);
                 delay(T_HIGH);
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, LOW);
+                digitalWrite(stimulator4a, LOW);
+                digitalWrite(stimulator4b, LOW);
                 delay(SAFE_TIME);
-                digitalWrite(stimulator1a, LOW);
-                digitalWrite(stimulator1b, HIGH);
+                digitalWrite(stimulator4a, LOW);
+                digitalWrite(stimulator4b, HIGH);
                 delay(T_LOW);
             }
             break;
